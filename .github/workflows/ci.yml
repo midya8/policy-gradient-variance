@@ -31,3 +31,13 @@ jobs:
       - run: python -m scorelab linear-demo > /tmp/linear-demo.json
       - run: python -m scorelab linear examples/two-state.json > /tmp/linear.json
       - run: PYTHONPATH=. python examples/render_linear.py --check
+  installed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: python tools/check_installed.py
