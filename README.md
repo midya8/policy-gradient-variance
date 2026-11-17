@@ -1,8 +1,11 @@
-# ScoreLab
+# Policy gradient variance
 
 ScoreLab enumerates the complete policy-gradient distribution of a supplied finite model at a softmax anchor. It compares full-return and reward-to-go estimators, state-value baselines, and optimal scalar and matrix score controls using exact rational means and covariances.
 
 It does not train a policy or fit a critic. The calculations show what each estimator does on the supplied model, not how quickly an agent would learn. Python 3.10+, no dependencies, network access or model downloads.
+
+The repository is now `policy-gradient-variance`. The Python import and CLI names stay
+`scorelab` for compatibility with existing scripts.
 
 ## Commands
 
