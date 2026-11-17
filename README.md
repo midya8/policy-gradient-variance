@@ -1,6 +1,6 @@
 # Policy gradient variance
 
-ScoreLab enumerates the complete policy-gradient distribution of a supplied finite model at a softmax anchor. It compares full-return and reward-to-go estimators, state-value baselines, and optimal scalar and matrix score controls using exact rational means and covariances.
+This implementation enumerates the complete policy-gradient distribution of a supplied finite model at a softmax anchor. It compares full-return and reward-to-go estimators, state-value baselines, and optimal scalar and matrix score controls using exact rational means and covariances.
 
 It does not train a policy or fit a critic. The calculations show what each estimator does on the supplied model, not how quickly an agent would learn. Python 3.10+, no dependencies, network access or model downloads.
 
@@ -97,7 +97,7 @@ scorelab demo
 
 ## Exact rational gradients at a softmax anchor
 
-For known state/action weights `w` and integer feature vectors `phi`, ScoreLab audits the parameterized policy
+For known state/action weights `w` and integer feature vectors `phi`, Policy gradient variance audits the parameterized policy
 
 ```text
 p_theta(a|s) = w(s,a) * exp(phi(s,a) dot theta)
@@ -137,7 +137,7 @@ trace_cov(G_b) - trace_cov(G_b*) =
     sum_j E[||Z_j||^2] * (b_j - b_j*)^2
 ```
 
-The numerator uses the **entire** gradient vector G0, including other times. It is not generally a local reward-weighted average or the exact state value. ScoreLab returns both sides of the exact excess-variance identity. A supplied custom baseline is also audited:
+The numerator uses the **entire** gradient vector G0, including other times. It is not generally a local reward-weighted average or the exact state value. This implementation returns both sides of the exact excess-variance identity. A supplied custom baseline is also audited:
 
 ```python
 custom = audit(sequential(), horizon=3,
@@ -175,6 +175,6 @@ Matrix-control verification adds 15 independently enumerated model/horizon setti
 
 ## Attribution and limits
 
-Score-function/control-variate reasoning and the warning that familiar baselines can be suboptimal are standard. [Greensmith, Bartlett and Baxter, *Variance Reduction Techniques for Gradient Estimates in Reinforcement Learning*, JMLR 5 (2004), Sections 4-6](https://jmlr.org/papers/volume5/greensmith04a/greensmith04a.pdf) studies these ideas in its GPOMDP/average-reward setting. ScoreLab does **not** implement GPOMDP or reproduce that paper's experiments/theorems. Its finite-horizon anchor model, exact full-path covariance audit, scalar time/state baseline derivation, code, fixtures, independent oracles and figure are original implementations. No external code or dataset is copied. [DESIGN.md](DESIGN.md) supplies the finite-horizon derivation. MIT licensed.
+Score-function/control-variate reasoning and the warning that familiar baselines can be suboptimal are standard. [Greensmith, Bartlett and Baxter, *Variance Reduction Techniques for Gradient Estimates in Reinforcement Learning*, JMLR 5 (2004), Sections 4-6](https://jmlr.org/papers/volume5/greensmith04a/greensmith04a.pdf) studies these ideas in its GPOMDP/average-reward setting. Policy gradient variance does **not** implement GPOMDP or reproduce that paper's experiments/theorems. Its finite-horizon anchor model, exact full-path covariance audit, scalar time/state baseline derivation, code, fixtures, independent oracles and figure are original implementations. No external code or dataset is copied. [DESIGN.md](DESIGN.md) supplies the finite-horizon derivation. MIT licensed.
 
 Everything depends on the supplied finite model. There is no environment fitting, actor-critic training, continuous state/action method, learned baseline, correlated data, infinite horizon, causal explanation of training or large-scale policy-gradient performance claim. Exact arithmetic validates the calculation, not the realism of a model.
